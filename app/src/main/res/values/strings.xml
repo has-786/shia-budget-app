@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Shia Budget</string>
+    <string name="title_home">Shia Budget</string>
+    <string name="title_dashboard">Credits</string>
+    <string name="title_notifications">Debits</string>
+</resources>

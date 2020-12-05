@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray"
+    tools:context=".RegActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:background="@color/lightgray"
+            android:orientation="vertical">
+
+
+
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+
+
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:textColor="#000000">
+
+                <requestFocus
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </EditText>
+
+
+            <Button
+                android:id="@+id/verify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@color/red"
+                android:onClick="verify"
+                android:textColor="@color/white"
+                android:text="Send OTP">
+
+
+            </Button>
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:alpha="0" />
+
+            <TextView
+                android:id="@+id/reg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="login"
+                android:layout_marginTop="5dp"
+                android:text="Already have an account?"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="30dp"
+                android:textSize="20sp">
+
+
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:alpha="0"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+
+
+                android:hint="Enter Your Name"
+                android:textColor="#000000">
+
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:alpha="0"
+                android:hint="Password"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+
+
+                android:inputType="textPassword"
+                android:textColor="#000" />
+
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:alpha="0"
+                android:hint="Enter Current Balance"
+                android:inputType="number"
+                android:text=""
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+
+                android:alpha="0"
+                android:hint="Pure Balance in current balance"
+                android:inputType="number"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+
+
+                android:text=""
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/purenote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:alpha="0"
+
+
+                android:text="Pure Balance is the balance after paying Khums"
+
+                android:textColor="@color/red" />
+
+
+            <EditText
+                android:id="@+id/otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:alpha="0"
+                android:hint="Enter OTP"
+                android:inputType="number">
+
+            </EditText>
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/green"
+                android:onClick="register"
+                android:enabled="false"
+                android:alpha="0"
+                android:layout_marginBottom="30dp"
+                android:text="Verify"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
+
