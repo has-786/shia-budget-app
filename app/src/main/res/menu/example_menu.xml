@@ -10,7 +10,7 @@
         />
     <item  android:id="@+id/item1"
         android:icon="@drawable/ic_menu"
-        android:title="About The App"
+        android:title="How to use"
         app:showAsAction="never"
         />
     <item  android:id="@+id/item2"

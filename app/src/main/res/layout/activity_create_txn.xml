@@ -19,6 +19,17 @@
             android:layout_height="match_parent"
             android:background="@color/lightgray">
 
+            <CheckBox
+                android:id="@+id/checked1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:enabled="false"
+                android:text="Khums not applicable to this amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
             <ProgressBar
                 android:id="@+id/pb"
                 style="?android:attr/progressBarStyle"

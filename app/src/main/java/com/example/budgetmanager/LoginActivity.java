@@ -3,8 +3,10 @@ package com.example.budgetmanager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Login");
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.purple));
+
+
 
         final SharedPreferences sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
         if (!sharedPreferences.getString("name", "").equals("")) {
@@ -150,10 +154,6 @@ public class LoginActivity extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, mili, pendingIntent);
 
     }
-
-
-
-
 
 
 }

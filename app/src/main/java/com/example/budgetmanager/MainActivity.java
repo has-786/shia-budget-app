@@ -42,6 +42,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+
 public class MainActivity extends AppCompatActivity {
 
     public static String ip="192.168.0.7:8080/shiabudget";
@@ -134,27 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.item1:
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setMessage("A budget management app to save your earnings and expenditures records\n" +
-                        "And see them in Credits and Debits tab respectively\n" +
-                        "It's very useful for Shias as it keeps track of Khums\n" +
-                        "Here Pure Balance is the balance after paying Khums so that money need not be considered for Khums\n" +
-                        "You can also set reminder for Khums\n");
-                alertDialogBuilder.setPositiveButton("yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-
+                How();
                 return true;
 
             case R.id.item2:
@@ -241,4 +222,26 @@ public void storeReminder()
 
 }
 
+
+
+    public  void How(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("How to use");
+        alertDialogBuilder.setMessage("A budget management app to save your earnings and expenditures records\n\n" +
+                "And see them in Credits and Debits tab respectively\n\n" +
+                "It's very useful for Shias as it keeps track of Khums\n\n" +
+                "Here Pure Balance is the balance after paying Khums or the amount for which Khums is not applicable\n\n" +
+                "So we consider Khums for the balance excluding pure balance\n\n" +
+                "You can also set reminder for Khums\n");
+        alertDialogBuilder.setPositiveButton("yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }

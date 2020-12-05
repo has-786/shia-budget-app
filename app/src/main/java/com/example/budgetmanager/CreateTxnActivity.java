@@ -41,8 +41,8 @@ public class CreateTxnActivity extends AppCompatActivity {
     EditText e1, e2;
     RadioButton r;
     RadioGroup rg;
-    CheckBox ch;
-RadioButton debit;
+    CheckBox ch,ch1;
+RadioButton debit,credit;
 ProgressBar pb;
 ConstraintLayout rel;
 Button submit;
@@ -53,9 +53,12 @@ Button submit;
         e1 = findViewById(R.id.topic);
         e2 = findViewById(R.id.amount);
         rg = findViewById(R.id.radioGroup);
-         debit= findViewById(R.id.radioDebit);
+        credit= findViewById(R.id.radioCredit);
+        debit= findViewById(R.id.radioDebit);
          ch=findViewById(R.id.checked);
-         pb=findViewById(R.id.pb);
+        ch1=findViewById(R.id.checked1);
+
+        pb=findViewById(R.id.pb);
         rel=findViewById(R.id.rel);
         submit=findViewById(R.id.submit);
 
@@ -91,7 +94,8 @@ Button submit;
             final int d = calendar.get(Calendar.DATE);
             final int m = calendar.get(Calendar.MONTH);
             final int y = calendar.get(Calendar.YEAR);
-            final int pure = (ch.isChecked()) ? 1 : 0;
+            final int pure = (ch.isChecked() && status==-1) ? 1 : 0;
+            final int pure1 = (ch1.isChecked()  && status==1) ? 1 : 0;
 
            final String timestamp = d + "/" + m + "/" + y;
 
@@ -119,6 +123,7 @@ Button submit;
                                         obj.put("month", m);
                                         obj.put("year", y);
                                         obj.put("pure",pure);
+                                        obj.put("pure1",pure1);
 
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                         jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
@@ -192,11 +197,14 @@ Button submit;
     public void check(View v)
     {
         if(debit.isChecked()){
-
             ch.setAlpha(1);
             ch.setEnabled(true);
+            ch1.setAlpha(0);
+            ch1.setEnabled(false);
         }
         else {
+            ch1.setAlpha(1);
+            ch1.setEnabled(true);
             ch.setAlpha(0);
             ch.setEnabled(false);
         }

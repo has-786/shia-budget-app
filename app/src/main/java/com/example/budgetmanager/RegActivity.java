@@ -2,7 +2,9 @@ package com.example.budgetmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -209,8 +211,8 @@ public class RegActivity extends AppCompatActivity {
                             editor.putString("alarmTime", "");
 
                             editor.commit();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            finish();
+
+                            How();
                             Toast.makeText(getApplicationContext(),"Successfully Registered", Toast.LENGTH_LONG).show();
                         }
                         else Toast.makeText(getApplicationContext(),response.getString("name"), Toast.LENGTH_LONG).show();
@@ -247,5 +249,26 @@ public class RegActivity extends AppCompatActivity {
         }
     }
 
+    public  void How(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("How to use");
+        alertDialogBuilder.setMessage("A budget management app to save your earnings and expenditures records\n\n" +
+                "And see them in Credits and Debits tab respectively\n\n" +
+                "It's very useful for Shias as it keeps track of Khums\n\n" +
+                "Here Pure Balance is the balance after paying Khums or the amount for which Khums is not applicable\n\n" +
+                "So we consider Khums for the balance excluding pure balance\n\n" +
+                "You can also set reminder for Khums\n");
+        alertDialogBuilder.setPositiveButton("yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        finish();
+                    }
+                });
 
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }
