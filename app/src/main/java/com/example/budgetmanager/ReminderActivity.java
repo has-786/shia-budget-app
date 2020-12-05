@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -53,13 +54,14 @@ public class ReminderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.purple));
 
-
-        Intent i=getIntent();
-        if(i!=null && i.getStringExtra("notification")!=null)
-            mp.stop();
-
-
-
+    /*    Calendar c=Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY,0);
+        c.set(Calendar.MINUTE,0);
+        c.set(Calendar.SECOND,0);
+        Log.d("myapp7",c.getTimeInMillis()+"");
+        Long x=c.getTimeInMillis()+(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)*3600+Calendar.getInstance().get(Calendar.MINUTE)*60+Calendar.getInstance().get(Calendar.SECOND))*1000;
+        Long y= Calendar.getInstance().getTimeInMillis();
+        Log.d("myapp",x+" "+y);*/
         t1=findViewById(R.id.t1);
         t2=findViewById(R.id.t2);
         t3=findViewById(R.id.t3);
@@ -115,19 +117,13 @@ public class ReminderActivity extends AppCompatActivity {
                 calendar1.set(Calendar.YEAR, year);
                 calendar1.set(Calendar.MONTH, month);
                 calendar1.set(Calendar.DATE, date);
-
-                Calendar calendar2 = Calendar.getInstance();
-                calendar2.set(Calendar.YEAR, year);
-                calendar2.set(Calendar.MONTH, month);
-                calendar2.set(Calendar.DATE, date);
-
+                calendar1.set(Calendar.HOUR_OF_DAY, 0);
+                calendar1.set(Calendar.MINUTE, 0);
+                calendar1.set(Calendar.SECOND, 0);
                 alarmDate=dateS+"/"+monthS+"/"+year;
                 t2.setText(alarmDate);
-                Calendar current=Calendar.getInstance();
-               // Log.d("myapp6",(calendar1.getTimeInMillis()-calendar2.getTimeInMillis())/1000+"");
-                long currentTime=(current.get(Calendar.HOUR_OF_DAY)*3600+current.get(Calendar.MINUTE)*60+current.get(Calendar.SECOND))*1000;
-                // String dateText = DateFormat.format("EEEE, MMM d, yyyy", calendar1).toString();
-                miliDate=calendar1.getTimeInMillis()-currentTime;
+
+                miliDate=calendar1.getTimeInMillis();
             }
         }, YEAR, MONTH, DATE);
 
@@ -143,19 +139,13 @@ public class ReminderActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                Log.d("tag", "onTimeSet: " + hour + minute);
                 String hourS=hour+"",minuteS=minute+"";
                 if(hour/10==0)hourS="0"+hourS;
                 if(minute/10==0)minuteS="0"+minuteS;
 
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.set(Calendar.HOUR, hour);
-                calendar1.set(Calendar.MINUTE, minute);
                 miliTime=(hour*3600+minute*60)*1000;
                 alarmTime=hourS+":"+minuteS;
                 t3.setText(alarmTime);
-                Log.d("myapp5",""+mili);
-
 
             }
         }, HOUR, MINUTE, true);
@@ -170,15 +160,7 @@ public class ReminderActivity extends AppCompatActivity {
             return;
         }
         final Calendar calendar = Calendar.getInstance();
-        //final long miliTemp=calendar.getTimeInMillis()+1000;
-        int requestCode=2;
-
-
-        Log.d("myapp5",mili+" "+calendar.get(Calendar.MINUTE));
-
         mili=miliDate+miliTime;
-        Log.d("myapp5",mili+" "+calendar.getTimeInMillis());
-        Log.d("myapp4",""+(mili-calendar.getTimeInMillis())/1000);
 
         if(mili<calendar.getTimeInMillis()){
             Toast.makeText(this,"Please select future date and time",Toast.LENGTH_LONG).show();
@@ -187,13 +169,10 @@ public class ReminderActivity extends AppCompatActivity {
 
         Intent intent  = new Intent(this, MyBroadcastReceiver.class);
         intent.setAction("SomeAction");
-       //  alarmManager.cancel(pendingIntent);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 5, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, mili, pendingIntent);
 
-      //  Toast.makeText(this,"Start",Toast.LENGTH_LONG).show();
 
         final SharedPreferences sharedPreferences=getSharedPreferences("", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor=sharedPreferences.edit();

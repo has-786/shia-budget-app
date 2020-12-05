@@ -10,10 +10,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 
 import androidx.core.app.NotificationCompat;
+
+import java.util.Calendar;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -32,20 +35,17 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         String alarmDate=sharedPreferences.getString("alarmDate","");
         String alarmTime=sharedPreferences.getString("alarmTime","");
 
-        Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
-                + "://" + context.getPackageName() + "/raw/alarm");
         Notification n = new NotificationCompat.Builder(context,"channelID")
                 .setContentTitle("Reminder for Khums on "+alarmDate+" "+alarmTime)
                 .setSmallIcon(R.drawable.shiabudget)
                 .setContentIntent(pIntent)
-                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE+ "://" +context.getPackageName()+"/"+R.raw.alarm))
                 .setVibrate(new long[]{0,500,500,500,500})
                 .setPriority(1)
                 .build();
 
         notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, n);
-
+        Log.d("myapp8", Calendar.getInstance().getTimeInMillis()+" "+sharedPreferences.getString("mili","0"));
         Toast.makeText(context, "Reminder for Khums", Toast.LENGTH_LONG).show();
     }
 }
