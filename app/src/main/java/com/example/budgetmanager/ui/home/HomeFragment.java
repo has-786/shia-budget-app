@@ -145,23 +145,4 @@ public class HomeFragment extends Fragment {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                Double pure=data.getDoubleExtra("pure",Double.parseDouble(t1.getText().toString()));
-                Double impure=data.getDoubleExtra("impure",Double.parseDouble(t2.getText().toString()));
-                Double balance=data.getDoubleExtra("balance",Double.parseDouble(t3.getText().toString()));
-                t1.setText(pure+"");
-                t2.setText(impure+"");
-                t3.setText(balance+"");
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
-        }
-    }//onActivityResult
-
 }

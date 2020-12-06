@@ -157,7 +157,6 @@ public class RegActivity extends AppCompatActivity {
         if(name1.equals("") || email.equals("")  || pass.equals("")){
             Toast.makeText(getApplicationContext(),"Please Fill The Required Places",Toast.LENGTH_LONG).show();
             return;
-
         }
         if(pure>balance){
             Toast.makeText(this,"Pure balance can't be greater",Toast.LENGTH_LONG).show();

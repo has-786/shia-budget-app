@@ -108,11 +108,12 @@ public class PureActivity extends AppCompatActivity {
                         int d = calendar.get(Calendar.DATE);
                         int m = calendar.get(Calendar.MONTH);
                         int y = calendar.get(Calendar.YEAR);
-                        String s=e1.getText().toString();
-                        if(s.equals(""))s="0";
+                        String x=e1.getText().toString();
+                        if(x.equals(""))x="0";
+                        final String s=x;
+
                         Log.d("myapp3",s);
-                        khums+=Double.parseDouble(s);
-                        if(khums==0){
+                        if(khums+Double.parseDouble(s)==0){
                             pbEnable(false);
                             Toast.makeText(getApplicationContext(),"Khums is 0",Toast.LENGTH_LONG).show();
                             return;
@@ -123,7 +124,7 @@ public class PureActivity extends AppCompatActivity {
                             String email=sharedPreferences.getString("email","");
 
                             obj.put("email", email);
-                            obj.put("khums",khums);
+                            obj.put("khums",khums+Double.parseDouble(s));
                             obj.put("timestamp", timestamp);
                             obj.put("date", d);
                             obj.put("month", m);
@@ -142,7 +143,7 @@ public class PureActivity extends AppCompatActivity {
                                         else {
                                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                                             intent.putExtra("balance",response.getDouble("balance"));
-                                            intent.putExtra("khums",khums);
+                                            intent.putExtra("khums",khums+Double.parseDouble(s));
                                             intent.putExtra("name","pure");
 
                                             t1.setText(response.getDouble("pure")+"");

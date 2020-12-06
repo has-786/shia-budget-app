@@ -1,4 +1,4 @@
-package com.example.budgetmanager.ui.dashboard;
+package com.example.budgetmanager.ui.credits;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -33,18 +32,18 @@ import org.json.JSONObject;
 
 import static com.example.budgetmanager.MainActivity.ip;
 
-public class DashboardFragment extends Fragment {
+public class CreditFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private CreditViewModel creditViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, final Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
+        creditViewModel =
+                ViewModelProviders.of(this).get(CreditViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
 
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
+        creditViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }

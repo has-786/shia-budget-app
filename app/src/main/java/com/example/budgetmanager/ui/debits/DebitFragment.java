@@ -1,4 +1,4 @@
-package com.example.budgetmanager.ui.notifications;
+package com.example.budgetmanager.ui.debits;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -32,16 +32,16 @@ import org.json.JSONObject;
 
 import static com.example.budgetmanager.MainActivity.ip;
 
-public class NotificationsFragment extends Fragment {
+public class DebitFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private DebitViewModel debitViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
+        debitViewModel =
+                ViewModelProviders.of(this).get(DebitViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        notificationsViewModel.getText().observe(this, new Observer<String>() {
+        debitViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }
