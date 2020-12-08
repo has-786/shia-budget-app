@@ -1,10 +1,8 @@
 package com.example.budgetmanager.adapter;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.budgetmanager.MainActivity;
 import com.example.budgetmanager.R;
 
 import org.json.JSONArray;
@@ -109,7 +106,6 @@ public  class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapt
             {
                 delete(id.getText().toString(),pb);
             }
-
         }
     }
 

@@ -44,6 +44,7 @@
             android:padding="5sp"
             android:textSize="20sp"
             android:text="" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -107,6 +108,16 @@
             android:text=""
             android:textColor="@color/red"
             android:textSize="20sp" />
+        <Button
+            android:id="@+id/del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/seagreen"
+            android:text="Delete"
+            android:textColor="@color/maroon"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout9"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -124,16 +135,6 @@
             android:layout_height="2dp"
             android:text="TextView" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/del"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:background="@color/seagreen"
-        android:textColor="@color/maroon"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout9"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ProgressBar
         android:id="@+id/pb"

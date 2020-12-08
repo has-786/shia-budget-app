@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -40,7 +42,7 @@ public class DebitFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         debitViewModel =
                 ViewModelProviders.of(this).get(DebitViewModel.class);
-        final View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        final View root = inflater.inflate(R.layout.fragment_debits, container, false);
         debitViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -49,6 +51,8 @@ public class DebitFragment extends Fragment {
 
         SharedPreferences sharedPreferences=this.getActivity().getSharedPreferences("", Context.MODE_PRIVATE);
         final RecyclerView recyclerView=root.findViewById(R.id.recycle1);
+        final ProgressBar pb=root.findViewById(R.id.pb);
+
         //Toast.makeText(QuizActivity.this,"Hi Syed",Toast.LENGTH_LONG).show();;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,6 +61,7 @@ public class DebitFragment extends Fragment {
         JsonArrayRequest jsonArrayRequest = null;
         RequestQueue requestQueue = null;
         try {
+            pb.setAlpha(1);
             String email=sharedPreferences.getString("email","");
             JSONArray arr=new JSONArray();
             JSONObject obj=new JSONObject();
@@ -72,13 +77,15 @@ public class DebitFragment extends Fragment {
                         final RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(),response);
                         recyclerView.setAdapter(recyclerViewAdapter);
                         searchbar(root,recyclerViewAdapter);
+                        pb.setAlpha(0);
 
                     }catch (Exception e){}
                 }}, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    pb.setAlpha(0);
                     Log.d("myapp", "Something went wrong Haha");
-                    //   Toast.makeText(VideoActivity.this, "error", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
             });
             requestQueue.add(jsonArrayRequest);

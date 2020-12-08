@@ -27,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.budgetmanager.ui.home.HomeFragment;
+import com.example.budgetmanager.ui.home.HomeViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -42,11 +44,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.example.budgetmanager.ui.home.HomeFragment.getDataForHome;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String ip="192.168.0.7:8080/shiabudget";
-//    public static String ip="thelasthope.site";
+  //  public static String ip="192.168.0.7:8080/shiabudget";
+    public static String ip="shiabudget.herokuapp.com/shiabudget";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
             storeReminder();
         }
+
+
 
 
         // Passing each menu ID as a set of Ids because each
@@ -117,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this,ReminderActivity.class));
     }
 
+
+    public void passbook(View v)
+    {
+        Intent i = new Intent(this, PassbookActivity.class);
+        startActivity(i);
+    }
 
 
     @Override
@@ -173,43 +185,43 @@ public  static void cancelAlarm(Context context)
 
 
 
-public void storeReminder()
-{
-    JsonObjectRequest jsonObjectRequest=null;
-    RequestQueue requestQueue=null;
-    JSONObject obj=new JSONObject();
-    final SharedPreferences sharedPreferences=getSharedPreferences("",Context.MODE_PRIVATE);
-    final String email=sharedPreferences.getString("email","");
-    final String alarmDate=sharedPreferences.getString("alarmDate","");
-    final String alarmTime=sharedPreferences.getString("alarmTime","");
-    final String mili=sharedPreferences.getString("mili","");
+
+public void storeReminder() {
+    JsonObjectRequest jsonObjectRequest = null;
+    RequestQueue requestQueue = null;
+    JSONObject obj = new JSONObject();
+    final SharedPreferences sharedPreferences = getSharedPreferences("", Context.MODE_PRIVATE);
+    final String email = sharedPreferences.getString("email", "");
+    final String alarmDate = sharedPreferences.getString("alarmDate", "");
+    final String alarmTime = sharedPreferences.getString("alarmTime", "");
+    final String mili = sharedPreferences.getString("mili", "");
     //Toast.makeText(this,alarmDate+" "+alarmTime,Toast.LENGTH_LONG).show();
 
     try {
-        obj.put("email",email);
+        obj.put("email", email);
         obj.put("alarmDate", alarmDate);
         obj.put("alarmTime", alarmTime);
         obj.put("mili", mili);
 
         requestQueue = Volley.newRequestQueue(this);
         jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                "http://"+ip+"/storereminder", obj, new Response.Listener<JSONObject>() {
+                "http://" + ip + "/storereminder", obj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (response.getInt("status")==1){
-                       // Toast.makeText(getApplicationContext(),"Successfully Registered", Toast.LENGTH_LONG).show();
+                    if (response.getInt("status") == 1) {
+                        // Toast.makeText(getApplicationContext(),"Successfully Registered", Toast.LENGTH_LONG).show();
+                    } else {
                     }
-                    else {}
-                        //Toast.makeText(getApplicationContext(),response.getString("name"), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),response.getString("name"), Toast.LENGTH_LONG).show();
 
-                }catch (Exception e){}
+                } catch (Exception e) {
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("myapp", "Something went wrong Haha");
-                //   Toast.makeText(VideoActivity.this, "error", Toast.LENGTH_LONG);
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -217,14 +229,15 @@ public void storeReminder()
                 0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    }catch (Exception e){}
+    } catch (Exception e) {
+    }
 
 
 }
 
 
 
-    public  void How(){
+    public  void How() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("How to use");
         alertDialogBuilder.setMessage("A budget management app to save your earnings and expenditures records\n\n" +
@@ -233,7 +246,7 @@ public void storeReminder()
                 "Here Pure Balance is the balance after paying Khums or the amount for which Khums is not applicable\n\n" +
                 "So we consider Khums for the balance excluding pure balance\n\n" +
                 "You can also set reminder for Khums\n");
-        alertDialogBuilder.setPositiveButton("yes",
+        alertDialogBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -244,4 +257,7 @@ public void storeReminder()
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+
+
 }

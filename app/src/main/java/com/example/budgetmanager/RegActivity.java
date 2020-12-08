@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -24,11 +23,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -37,11 +34,11 @@ import java.util.TimeZone;
 import static com.example.budgetmanager.MainActivity.ip;
 
 public class RegActivity extends AppCompatActivity {
-    EditText name,e1,e2,e3,e4,otp;
+    EditText name,e1,e2,e3,e4,otp,e5;
     CheckBox ch;
     TextView purenote;
     RelativeLayout rel;
-    ProgressBar pb;
+    ProgressBar pb,pb1;
     Button register,verify;
 
 
@@ -54,8 +51,10 @@ public class RegActivity extends AppCompatActivity {
         e2=findViewById(R.id.editText2);
         e3=findViewById(R.id.editText3);
         e4=findViewById(R.id.editText4);
+        e5=findViewById(R.id.editText5);
         ch=findViewById(R.id.checked);
         pb=findViewById(R.id.pb);
+        pb1=findViewById(R.id.pb1);
         rel=findViewById(R.id.rel);
         register=findViewById(R.id.register);
         verify=findViewById(R.id.verify);;
@@ -109,6 +108,7 @@ public class RegActivity extends AppCompatActivity {
                         e2.setAlpha(1);
                         e3.setAlpha(1);
                         e4.setAlpha(1);
+                        e5.setAlpha(1);
                         purenote.setAlpha(1);
                         register.setAlpha(1);
                         register.setEnabled(true);
@@ -127,7 +127,7 @@ public class RegActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("myapp", "Something went wrong Haha");
-                    //   Toast.makeText(VideoActivity.this, "error", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     pbEnable(false);
                 }
             });
@@ -146,6 +146,8 @@ public class RegActivity extends AppCompatActivity {
         final String name1=name.getText().toString();
         final String email=e1.getText().toString();
         final String pass=e2.getText().toString();
+        final String cpass=e5.getText().toString();
+
         String amt1=e3.getText().toString();
         if(amt1.equals(""))amt1="0";
         String amt2=e4.getText().toString();
@@ -156,6 +158,10 @@ public class RegActivity extends AppCompatActivity {
 
         if(name1.equals("") || email.equals("")  || pass.equals("")){
             Toast.makeText(getApplicationContext(),"Please Fill The Required Places",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!pass.equals(cpass)){
+            Toast.makeText(getApplicationContext(),"Password doesn't match with confirm password",Toast.LENGTH_LONG).show();
             return;
         }
         if(pure>balance){
@@ -171,7 +177,7 @@ public class RegActivity extends AppCompatActivity {
             return;
         }
 
-        pbEnable(true);
+        pb1Enable(true);
 
         JsonObjectRequest jsonObjectRequest=null;
         RequestQueue requestQueue=null;
@@ -199,7 +205,7 @@ public class RegActivity extends AppCompatActivity {
                     "http://"+ip+"/register", obj, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    pbEnable(false);
+                    pb1Enable(false);
                     try {
                         if (response.getInt("status")==1){
                             editor.putString("otp", "9999999");
@@ -221,9 +227,10 @@ public class RegActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
                     Log.d("myapp", "Something went wrong Haha");
-                    //   Toast.makeText(VideoActivity.this, "error", Toast.LENGTH_LONG);
-                    pbEnable(false);
+                    Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                    pb1Enable(false);
                 }
             });
             requestQueue.add(jsonObjectRequest);
@@ -239,6 +246,19 @@ public class RegActivity extends AppCompatActivity {
     {
         if(b) {
             pb.setAlpha(1);
+            verify.setEnabled(false);
+        }
+        else
+        {
+            pb.setAlpha(0);
+            verify.setEnabled(true);
+        }
+    }
+
+    public void pb1Enable(boolean b)
+    {
+        if(b) {
+            pb1.setAlpha(1);
             register.setEnabled(false);
         }
         else
@@ -257,7 +277,7 @@ public class RegActivity extends AppCompatActivity {
                 "Here Pure Balance is the balance after paying Khums or the amount for which Khums is not applicable\n\n" +
                 "So we consider Khums for the balance excluding pure balance\n\n" +
                 "You can also set reminder for Khums\n");
-        alertDialogBuilder.setPositiveButton("yes",
+        alertDialogBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {

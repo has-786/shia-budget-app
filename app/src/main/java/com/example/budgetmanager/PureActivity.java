@@ -3,7 +3,6 @@ package com.example.budgetmanager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,7 +36,7 @@ public class PureActivity extends AppCompatActivity {
     TextView t1,t2,t3;
     EditText e1;
     SharedPreferences sharedPreferences;
-    ProgressBar pb;
+    ProgressBar pb,pb1;
     ConstraintLayout rel;
     Double khums;
     Button pay;
@@ -53,7 +51,12 @@ public class PureActivity extends AppCompatActivity {
         e1=findViewById(R.id.e1);
         rel=findViewById(R.id.rel);
         pb=findViewById(R.id.pb);
+        pb1=findViewById(R.id.pb1);
         pay=findViewById(R.id.pay);
+
+        pay.setEnabled(false);
+
+        khums=0.0;
 
         getSupportActionBar().setTitle("Pay Khums");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,6 +67,7 @@ public class PureActivity extends AppCompatActivity {
         RequestQueue requestQueue = null;
         JSONObject obj = new JSONObject();
         try {
+            pb1.setAlpha(1);
             String email=sharedPreferences.getString("email","");
             obj.put("email", email);
 
@@ -77,10 +81,16 @@ public class PureActivity extends AppCompatActivity {
                         t2.setText(response.getString("impure"));
                         khums=Math.ceil(Double.parseDouble(response.getString("impure"))/5);
                         t3.setText(khums+"");
+                        pb1.setAlpha(0);
+                        pay.setEnabled(true);
+
                     }catch (Exception e){}
                 }}, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    pb1.setAlpha(0);
+                    Toast.makeText(getApplicationContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+
                     Log.d("myapp", "Something went wrong Haha");
                 }
             });
@@ -160,6 +170,8 @@ public class PureActivity extends AppCompatActivity {
                                 }}, new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getApplicationContext(), "Please check you internet connection", Toast.LENGTH_SHORT).show();
+
                                     Log.d("myapp", "Something went wrong Haha");
                                     pbEnable(false);
                                 }

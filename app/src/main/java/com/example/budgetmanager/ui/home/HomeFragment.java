@@ -1,6 +1,5 @@
 package com.example.budgetmanager.ui.home;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,16 +24,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.budgetmanager.CreateTxnActivity;
-import com.example.budgetmanager.MainActivity;
+import com.example.budgetmanager.PassbookActivity;
 import com.example.budgetmanager.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
 
-import java.time.Year;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import static com.example.budgetmanager.MainActivity.ip;
@@ -42,7 +38,8 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
-    TextView t1,t2,t3;
+    static TextView t1,t2,t3;
+    static ProgressBar pb;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -51,6 +48,7 @@ public class HomeFragment extends Fragment {
           t1=root.findViewById(R.id.t1);
           t2 = root.findViewById(R.id.t2);
           t3 = root.findViewById(R.id.t3);
+          pb=root.findViewById(R.id.pb);
 
           Intent i=getActivity().getIntent();
           if(i!=null)
@@ -89,7 +87,7 @@ public class HomeFragment extends Fragment {
 
           }
 
-        getDataForHome();
+        getDataForHome(getContext());
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -98,11 +96,10 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    public void getDataForHome()
+    public static void getDataForHome(final Context context)
     {
-        final SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("",Context.MODE_PRIVATE);
-
-       Date date=new Date();
+        pb.setAlpha(1);
+        final SharedPreferences sharedPreferences = context.getSharedPreferences("",Context.MODE_PRIVATE);
 
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 
@@ -120,7 +117,7 @@ public class HomeFragment extends Fragment {
             obj.put("month", m);
             obj.put("year", y);
 
-            requestQueue = Volley.newRequestQueue(getContext());
+            requestQueue = Volley.newRequestQueue(context);
             jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                     "http://"+ip+"/home", obj, new Response.Listener<JSONObject>() {
                 @Override
@@ -129,6 +126,8 @@ public class HomeFragment extends Fragment {
                       t1.setText(response.getString("balance"));
                       t2.setText(response.getString("credit"));
                       t3.setText(response.getString("debit"));
+                      pb.setAlpha(0);
+
                    //  Toast.makeText(getContext(), response.getString("balance")+"", Toast.LENGTH_LONG).show();
 
                   }catch (Exception e){}
@@ -136,13 +135,18 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                      Log.d("myapp", "Something went wrong Haha");
-                    //   Toast.makeText(VideoActivity.this, "error", Toast.LENGTH_LONG);
+                        pb.setAlpha(0);
+
+                        Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
             });
             requestQueue.add(jsonObjectRequest);
         } catch (Exception e) {
         }
     }
+
+
+
 
 
 }
